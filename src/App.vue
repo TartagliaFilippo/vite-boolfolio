@@ -2,12 +2,32 @@
 import ProjectList from "./components/projects/ProjectList.vue";
 import axios from "axios";
 
+import { store } from "./data/store";
+
 export default {
   data() {
-    return {};
+    return {
+      projects: [],
+
+      api: {
+        baseUrl: "http://localhost:8000/api/",
+      },
+    };
   },
 
   components: { ProjectList },
+
+  methods: {
+    fetchProjects(uri = this.api.baseUrl + "projects") {
+      axios.get(uri).then((response) => {
+        this.projects = response.data.projects.data;
+      });
+    },
+  },
+
+  created() {
+    this.fetchProjects();
+  },
 };
 </script>
 
@@ -15,7 +35,7 @@ export default {
   <div class="container">
     <h1>Sono un titolo</h1>
     <div class="section-list">
-      <ProjectList />
+      <ProjectList :projects="projects" />
     </div>
   </div>
 </template>
