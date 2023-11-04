@@ -1,5 +1,6 @@
 <script>
 import ProjectList from "./components/projects/ProjectList.vue";
+import Pagination from "./entity/Pagination.vue";
 import axios from "axios";
 
 import { store } from "./data/store";
@@ -12,15 +13,20 @@ export default {
       api: {
         baseUrl: "http://localhost:8000/api/",
       },
+
+      pagination: {
+        links: null,
+      },
     };
   },
 
-  components: { ProjectList },
+  components: { ProjectList, Pagination },
 
   methods: {
     fetchProjects(uri = this.api.baseUrl + "projects") {
       axios.get(uri).then((response) => {
         this.projects = response.data.projects.data;
+        this.pagination.links = response.data.projects.links;
       });
     },
   },
@@ -37,6 +43,17 @@ export default {
     <div class="section-list">
       <ProjectList :projects="projects" />
     </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li
+          class="page-item my-3"
+          @click="fetchProjects(link.url)"
+          v-for="link in pagination.links"
+        >
+          <a class="page-link" v-html="link.label" href="#"></a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
