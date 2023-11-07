@@ -17,9 +17,6 @@ export default {
   <div class="container">
     <NavbarUi />
     <router-view></router-view>
-    <div class="section-list">
-      <ProjectList />
-    </div>
   </div>
 </template>
 
