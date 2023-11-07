@@ -19,7 +19,7 @@ export default {
     };
   },
 
-  components: { ProjectList, Pagination },
+  components: { ProjectList },
 
   methods: {
     fetchProjects(uri = this.api.baseUrl + "projects") {
