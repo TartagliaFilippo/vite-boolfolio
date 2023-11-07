@@ -1,6 +1,5 @@
 <script>
 import ProjectList from "./components/projects/ProjectList.vue";
-import Pagination from "./entity/Pagination.vue";
 import axios from "axios";
 
 import { store } from "./data/store";
