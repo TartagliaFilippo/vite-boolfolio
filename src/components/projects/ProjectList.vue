@@ -2,13 +2,11 @@
 import ProjectCard from "./ProjectCard.vue";
 import axios from "axios";
 
+import { store } from "../../data/store";
+
 export default {
   data() {
     return {
-      api: {
-        baseUrl: "http://localhost:8000/api/",
-      },
-
       projects: [],
 
       pagination: {
@@ -20,7 +18,7 @@ export default {
   components: { ProjectCard },
 
   methods: {
-    fetchProjects(uri = this.api.baseUrl + "projects") {
+    fetchProjects(uri = store.api.baseUrl + "projects") {
       axios.get(uri).then((response) => {
         this.projects = response.data.projects.data;
         this.pagination.links = response.data.projects.links;
