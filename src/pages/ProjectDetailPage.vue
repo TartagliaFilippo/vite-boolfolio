@@ -26,7 +26,7 @@ export default {
 <template>
   <div class="container">
     <h1>Dettaglio Progetto</h1>
-    <ProjectCard :project="project" v-if="project" />
+    <ProjectCard :project="project" :isDetail="true" v-if="project" />
   </div>
 </template>
 

@@ -6,6 +6,7 @@ export default {
 
   props: {
     project: Object,
+    isDetail: Boolean,
   },
 };
 </script>
@@ -31,7 +32,7 @@ export default {
           </p>
         </div>
       </div>
-      <div class="card-footer">
+      <div class="card-footer" v-if="!isDetail">
         <router-link
           :to="{ name: 'project-detail', params: { id: project.id } }"
           class="btn btn-outline-primary"
