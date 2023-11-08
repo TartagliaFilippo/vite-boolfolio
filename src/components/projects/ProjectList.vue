@@ -1,5 +1,7 @@
 <script>
 import ProjectCard from "./ProjectCard.vue";
+import PaginationUi from "../../ui/PaginationUi.vue";
+
 import axios from "axios";
 
 import { store } from "../../data/store";
@@ -9,19 +11,21 @@ export default {
     return {
       projects: [],
 
-      pagination: {
-        links: null,
-      },
+      pagination: [],
     };
   },
 
-  components: { ProjectCard },
+  components: { ProjectCard, PaginationUi },
 
   methods: {
-    fetchProjects(uri = store.api.baseUrl + "projects") {
-      axios.get(uri).then((response) => {
+    fetchProjects(apiUri = null) {
+      if (!apiUri) {
+        apiUri = store.api.baseUrl + "projects";
+      }
+
+      axios.get(apiUri).then((response) => {
         this.projects = response.data.projects.data;
-        this.pagination.links = response.data.projects.links;
+        this.pagination = response.data.projects.links;
       });
     },
   },
@@ -35,6 +39,7 @@ export default {
 <template>
   <div class="container">
     <h2>ProjectList</h2>
+    <PaginationUi :pagination="pagination" @change-page="fetchProjects" />
     <div class="row row-cols-3 g-4">
       <ProjectCard
         v-for="project in projects"
@@ -42,17 +47,7 @@ export default {
         :isDetail="false"
       />
     </div>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li
-          class="page-item my-3"
-          @click="fetchProjects(link.url)"
-          v-for="link in pagination.links"
-        >
-          <a class="page-link" v-html="link.label" href="#"></a>
-        </li>
-      </ul>
-    </nav>
+    <PaginationUi :pagination="pagination" @change-page="fetchProjects" />
   </div>
 </template>
 
