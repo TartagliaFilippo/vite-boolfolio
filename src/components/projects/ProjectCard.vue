@@ -32,7 +32,11 @@ export default {
         </div>
       </div>
       <div class="card-footer">
-        <a :href="project.url" class="btn btn-outline-primary">Vedi</a>
+        <router-link
+          :to="{ name: 'project-detail', params: { id: project.id } }"
+          class="btn btn-outline-primary"
+          >Vedi</router-link
+        >
       </div>
     </div>
   </div>
