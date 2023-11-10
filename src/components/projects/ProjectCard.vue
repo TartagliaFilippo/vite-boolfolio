@@ -16,12 +16,16 @@ export default {
     <div class="card h-100">
       <div class="card-body">
         <h4 class="card-title">{{ project.title }}</h4>
-        <h5
+        <router-link
+          :to="{
+            name: 'portfolio-filter-type',
+            params: { type_id: project.type_id },
+          }"
           class="card-subtitle badge"
           :style="{ backgroundColor: project.type.color }"
         >
           {{ project.type.label }}
-        </h5>
+        </router-link>
         <div>
           <p
             class="badge rounded-pill mt-2 mx-1"

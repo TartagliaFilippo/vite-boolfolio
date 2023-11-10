@@ -17,8 +17,20 @@ export default {
 
   components: { ProjectCard, PaginationUi },
 
+  props: { type_id: Number },
+
+  computed: {
+    endpoint() {
+      return this.type_id
+        ? store.api.baseUrl +
+            "portfolio-filter-type/" +
+            this.$route.params.type_id
+        : store.api.baseUrl + "projects";
+    },
+  },
+
   methods: {
-    fetchProjects(apiUri = null) {
+    fetchProjects(apiUri = this.end) {
       if (!apiUri) {
         apiUri = store.api.baseUrl + "projects";
       }
@@ -43,6 +55,7 @@ export default {
     <div class="row row-cols-3 g-4">
       <ProjectCard
         v-for="project in projects"
+        :key="project.id"
         :project="project"
         :isDetail="false"
       />
